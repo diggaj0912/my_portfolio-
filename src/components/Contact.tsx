@@ -1,8 +1,10 @@
 import { Github, Linkedin, Mail, Phone, Instagram, FileText, Twitter } from 'lucide-react';
 import { useState } from 'react';
+import CoverLetterModal from './CoverLetterModal';
 
 export default function Contact() {
   const [openResume, setOpenResume] = useState<'fsd' | 'devrel' | null>(null);
+  const [activeCoverLetter, setActiveCoverLetter] = useState<'fsd' | 'devrel' | null>(null);
 
   const toggleResume = (type: 'fsd' | 'devrel') => {
     setOpenResume(prev => prev === type ? null : type);
@@ -59,7 +61,7 @@ export default function Contact() {
             </button>
             {openResume === 'fsd' && (
               <div className="px-5 pb-5 pt-2 flex gap-3 border-t border-white/5 bg-white/[0.01]">
-                <a href="#" className="flex-1 text-center py-3 text-sm font-medium text-white bg-white/5 hover:bg-white/10 rounded-xl transition-all border border-white/10 hover:border-white/20">Cover Letter</a>
+                <button onClick={() => setActiveCoverLetter('fsd')} className="flex-1 text-center py-3 text-sm font-medium text-white bg-white/5 hover:bg-white/10 rounded-xl transition-all border border-white/10 hover:border-white/20">Cover Letter</button>
                 <a href="#" className="flex-1 text-center py-3 text-sm font-medium text-white bg-blue-600/20 hover:bg-blue-600/40 rounded-xl transition-all border border-blue-500/30 text-[#60a5fa] hover:text-[#93c5fd]">Resume</a>
               </div>
             )}
@@ -79,13 +81,15 @@ export default function Contact() {
             </button>
             {openResume === 'devrel' && (
               <div className="px-5 pb-5 pt-2 flex gap-3 border-t border-white/5 bg-white/[0.01]">
-                <a href="#" className="flex-1 text-center py-3 text-sm font-medium text-white bg-white/5 hover:bg-white/10 rounded-xl transition-all border border-white/10 hover:border-white/20">Cover Letter</a>
+                <button onClick={() => setActiveCoverLetter('devrel')} className="flex-1 text-center py-3 text-sm font-medium text-white bg-white/5 hover:bg-white/10 rounded-xl transition-all border border-white/10 hover:border-white/20">Cover Letter</button>
                 <a href="#" className="flex-1 text-center py-3 text-sm font-medium text-white bg-emerald-600/20 hover:bg-emerald-600/40 text-[#4ade80] rounded-xl transition-all border border-emerald-500/30 hover:text-[#86efac]">Resume</a>
               </div>
             )}
           </div>
         </div>
       </div>
+      
+      <CoverLetterModal isOpen={!!activeCoverLetter} type={activeCoverLetter || 'fsd'} onClose={() => setActiveCoverLetter(null)} />
     </div>
   );
 }
